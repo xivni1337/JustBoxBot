@@ -1,10 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./Form.css"
+import {useTg} from "../../hooks/useTg";
 
 const Form = () => {
     const [city, setCity] = React.useState("");
     const [country, setCountry] = React.useState("");
     const [subject, setSubject] = React.useState("physical");
+    const {tg} = useTg()
+
+    useEffect(() => {
+        tg.MainButton.setParams({
+            text:'отпавить дынные'
+        })
+    }, []);
+
+    useEffect(() => {
+        if (!city || !country){
+            tg.MainButton.hide()
+        }
+        else{
+            tg.MainButton.show()
+        }
+    }, [country,city]);
 
     const onChangeCountry = (e) => {
         setCountry(e.target.value);
