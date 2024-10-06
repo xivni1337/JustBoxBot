@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import "./Form.css"
 import {useTg} from "../../hooks/useTg";
 
@@ -7,6 +7,17 @@ const Form = () => {
     const [country, setCountry] = React.useState("");
     const [subject, setSubject] = React.useState("physical");
     const {tg} = useTg()
+    const onSendData = useCallback(() => {
+        const data = {country,subject,city};
+        tg.sendData(JSON.stringify(data));
+    },[country,city,subject])
+
+    useEffect(() => {
+        tg.onEvent("mainButtonClick", onSendData)
+        return () => {
+            tg.onEvent("mainButtonClick", onSendData)
+        }
+    }, [onSendData]);
 
     useEffect(() => {
         tg.MainButton.setParams({
@@ -39,10 +50,10 @@ const Form = () => {
         <div className={"form"}>
             <h1>Ввидите ваши данные</h1>
             <input type="text" className={"input"} value={country} onChange={onChangeCountry} placeholder={"Страна"}/>
-            <input type="text" className={"input"} value={city} onChange={onChangeCity} placeholder={"оГорот"}/>
-            <select className={"select"} value={subject} onChange={onChangeSubjects}>
-                <option value={"physical"}>ФизЛИцооо</option>
-                <option value={"legal"}>ЮрЛИцооо</option>
+            <input type="text" className={"input"} value={city} onChange={onChangeCity} placeholder={"Город"}/>
+            <select className={"select"} value={subject} defaultValue={"physical"} onChange={onChangeSubjects}>
+                <option value={"physical"}>ФизЛицо</option>
+                <option value={"legal"}>Юрлицо</option>
             </select>
         </div>
     )
