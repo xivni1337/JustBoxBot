@@ -13,9 +13,9 @@ const Form = () => {
     },[country,city,subject])
 
     useEffect(() => {
-        tg.onEvent("mainButtonClick", onSendData)
+        tg.onEvent("mainButtonClicked", onSendData)
         return () => {
-            tg.onEvent("mainButtonClick", onSendData)
+            tg.onEvent("mainButtonClicked", onSendData)
         }
     }, [onSendData]);
 
