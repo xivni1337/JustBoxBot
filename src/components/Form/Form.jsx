@@ -8,8 +8,8 @@ const Form = () => {
     const [subject, setSubject] = React.useState("physical");
     const {tg} = useTg()
     const onSendData = useCallback(() => {
-        const data = {country,subject,city};
-        tg.sendData(JSON.stringify(data));
+        const data = {country,subject,city}
+        tg.sendData(JSON.stringify(data))
     },[country,city,subject])
 
     useEffect(() => {
